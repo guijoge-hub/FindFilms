@@ -1074,13 +1074,14 @@ img { display: block; max-width: 100%; }
     padding-bottom: 5rem !important;
   }
 
-  /* Navbar — dark background on mobile so logo/hamburger are always readable */
+  /* Navbar — sticky on mobile so it doesn't overlap the FIND letter videos */
   .navbar,
   .w-nav {
     padding: 1rem var(--ff-pad) !important;
-    background: rgba(0, 0, 0, 0.55) !important;
-    backdrop-filter: blur(4px) !important;
-    -webkit-backdrop-filter: blur(4px) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+    background: rgba(0, 0, 0, 0.85) !important;
   }
 
   /* Remove the big Webflow margin-top on the projects block */
@@ -1088,8 +1089,9 @@ img { display: block; max-width: 100%; }
     margin-top: 0 !important;
   }
 
-  /* Reduce gap between FIND section and projects */
+  /* Navbar is sticky so no padding needed to clear it */
   .section-top.full {
+    padding-top: 0 !important;
     padding-bottom: 0 !important;
   }
 }
