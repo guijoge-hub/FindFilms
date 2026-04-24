@@ -327,6 +327,7 @@ img { display: block; max-width: 100%; }
   position: relative !important;
   padding-top: 14rem !important;
   padding-bottom: 5rem !important;
+  overflow: hidden !important;
 }
 
 /* Raise bg-image above body canvas so it shows behind the transparent navbar.
@@ -512,8 +513,18 @@ img { display: block; max-width: 100%; }
 /* Two-column content rows (label | body) */
 .grid-content {
   grid-template-columns: 12rem 1fr !important;
+  grid-template-rows: auto !important;
   grid-column-gap: 3rem !important;
   align-items: start !important;
+  overflow: visible !important;
+  height: auto !important;
+}
+
+.content.page {
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+  overflow: visible !important;
+  height: auto !important;
 }
 
 /* Heading inside rich text */
