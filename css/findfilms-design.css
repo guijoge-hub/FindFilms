@@ -1074,10 +1074,23 @@ img { display: block; max-width: 100%; }
     padding-bottom: 5rem !important;
   }
 
-  /* Navbar */
+  /* Navbar — dark background on mobile so logo/hamburger are always readable */
   .navbar,
   .w-nav {
     padding: 1rem var(--ff-pad) !important;
+    background: rgba(0, 0, 0, 0.55) !important;
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+  }
+
+  /* Remove the big Webflow margin-top on the projects block */
+  .block-info {
+    margin-top: 0 !important;
+  }
+
+  /* Reduce gap between FIND section and projects */
+  .section-top.full {
+    padding-bottom: 0 !important;
   }
 }
 
