@@ -1,1 +1,1112 @@
+/* ============================================================
+   FIND FILMS® — DESIGN SYSTEM v2
+   Camada visual sobre o CSS do Webflow. Sempre carregado por último.
 
+   Tokens → Base → Nav → Cards → Sections → Footer → Contact → Responsive
+============================================================ */
+
+/* ─────────────────────────────────────────────────────────────
+   1. DESIGN TOKENS
+───────────────────────────────────────────────────────────── */
+:root {
+  --ff-bg:          #000;
+  --ff-surface:     #080808;
+  --ff-surface-2:   #0f0f0f;
+  --ff-surface-hover: #111;
+
+  --ff-white:       #ffffff;
+  --ff-white-80:    rgba(255,255,255,0.80);
+  --ff-white-60:    rgba(255,255,255,0.60);
+  --ff-white-40:    rgba(255,255,255,0.40);
+  --ff-white-20:    rgba(255,255,255,0.20);
+  --ff-white-08:    rgba(255,255,255,0.08);
+  --ff-white-05:    rgba(255,255,255,0.05);
+
+  --ff-red:         #fb3232;
+  --ff-border:      1px solid rgba(255,255,255,0.07);
+
+  --ff-display:     'Octanegx', Arial, sans-serif;
+  --ff-ui:          'Oaksansvf', Arial, sans-serif;
+
+  --ff-ease:        cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ff-ease-in:     cubic-bezier(0.55, 0.055, 0.675, 0.19);
+
+  --ff-pad:         2.5rem;
+  --ff-pad-sm:      1.25rem;
+  --ff-section-v:   8rem;
+  --ff-section-v-sm:4.5rem;
+  --ff-max-w:       1440px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   2. BASE
+───────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  background-color: var(--ff-bg) !important;
+  color: var(--ff-white) !important;
+  font-family: var(--ff-ui) !important;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+}
+
+a { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; }
+
+/* ─────────────────────────────────────────────────────────────
+   3. NAVIGATION — override Webflow navbar
+───────────────────────────────────────────────────────────── */
+.navbar,
+.w-nav {
+  padding: 1.4rem var(--ff-pad) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.nav-text {
+  font-family: var(--ff-ui) !important;
+  font-size: 0.72rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--ff-white) !important;
+  margin: 0 !important;
+}
+
+.block-underline { height: 1px !important; }
+
+.underline {
+  background-color: var(--ff-white) !important;
+  opacity: 0.5;
+}
+
+.menu-button-3 {
+  border-radius: 100% !important;
+  background-color: rgba(255,255,255,0.08) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  backdrop-filter: blur(20px) !important;
+  padding: 0.75rem !important;
+  font-size: 1.1rem !important;
+}
+
+/* Desktop: nav menu must be transparent so hero bg shows through navbar */
+.nav-menu-2 {
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-radius: 0 !important;
+  border-bottom: none !important;
+}
+
+/* Mobile: collapsed nav panel gets dark frosted glass */
+@media screen and (max-width: 767px) {
+  .nav-menu-2.w--open {
+    background-color: rgba(8,8,8,0.92) !important;
+    -webkit-backdrop-filter: blur(30px) !important;
+    backdrop-filter: blur(30px) !important;
+    border-bottom: var(--ff-border) !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   4. PROJECT CARDS — the core visual redesign
+
+   Transforms the flat image+text-below pattern into
+   cinematic full-bleed portrait cards with text overlay.
+───────────────────────────────────────────────────────────── */
+
+/* The card wrapper */
+.link-work-1,
+.link-work-1-copy-copy {
+  position: relative !important;
+  display: block !important;
+  overflow: hidden !important;
+  aspect-ratio: 3 / 4 !important;
+  width: 100% !important;
+  text-decoration: none !important;
+  transition: transform 0 !important; /* kill old scale transition */
+  background-color: var(--ff-surface) !important;
+}
+
+.link-work-1:hover,
+.link-work-1-copy-copy:hover {
+  transform: none !important;
+  z-index: auto !important;
+}
+
+/* Gradient overlay via pseudo-element */
+.link-work-1::after,
+.link-work-1-copy-copy::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.92) 0%,
+    rgba(0,0,0,0.45) 40%,
+    rgba(0,0,0,0.10) 70%,
+    rgba(0,0,0,0)    100%
+  );
+  z-index: 5;
+  pointer-events: none;
+  transition: opacity 0.5s var(--ff-ease);
+}
+
+.link-work-1:hover::after,
+.link-work-1-copy-copy:hover::after {
+  opacity: 0.85;
+}
+
+/* Static image fills the card */
+.link-work-1 .image-36,
+.link-work-1-copy-copy .image-36 {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  margin: 0 !important;
+  aspect-ratio: unset !important;
+  transition: transform 0.9s var(--ff-ease) !important;
+  display: block !important;
+}
+
+.link-work-1:hover .image-36,
+.link-work-1-copy-copy:hover .image-36 {
+  transform: scale(1.07) !important;
+}
+
+/* Webflow background-video container fills the card */
+.link-work-1 .bg-video-work-1,
+.link-work-1 .bg-video-work-3,
+.link-work-1 [class*="bg-video-work"],
+.link-work-1-copy-copy .bg-video-work-1,
+.link-work-1-copy-copy [class*="bg-video-work"] {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: unset !important;
+  display: block !important;
+  overflow: hidden !important;
+}
+
+/* Fix Webflow's centering hack (top:-100%;left:-100%) — override to proper fill */
+.link-work-1 [class*="bg-video-work"] > video,
+.link-work-1-copy-copy [class*="bg-video-work"] > video {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  margin: 0 !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+/* Text overlay at bottom of card */
+.link-work-1 .block-work,
+.link-work-1 .block-work.padding,
+.link-work-1-copy-copy .block-work,
+.link-work-1-copy-copy .block-work.padding {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: auto !important;
+  padding: 1.4rem 1.75rem 1.8rem !important;
+  background: transparent !important;
+  z-index: 10 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.3rem !important;
+  transform: translateY(0.4rem);
+  transition: transform 0.4s var(--ff-ease);
+}
+
+.link-work-1:hover .block-work,
+.link-work-1:hover .block-work.padding,
+.link-work-1-copy-copy:hover .block-work,
+.link-work-1-copy-copy:hover .block-work.padding {
+  transform: translateY(0) !important;
+}
+
+/* Project card title */
+.heading-work {
+  font-family: var(--ff-ui) !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.07em !important;
+  text-transform: uppercase !important;
+  color: var(--ff-white) !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+
+/* Project card subtitle/format */
+.info-work {
+  font-family: var(--ff-ui) !important;
+  font-size: 0.65rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: var(--ff-white-60) !important;
+  opacity: 1 !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+
+/* Hide the arrow button (clutter) */
+.block-arrow { display: none !important; }
+
+/* ─────────────────────────────────────────────────────────────
+   5. PROJECT GRIDS — global layout for all portfolio grids
+───────────────────────────────────────────────────────────── */
+
+/* Grid used on portfolio list pages (cinema, clips, publicidade) */
+.grid-work-1 {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  grid-column-gap: 1px !important;
+  grid-row-gap: 1px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  background-color: var(--ff-white-05) !important;
+  align-items: start !important;
+}
+
+/* 2-column grid — used when there are exactly 4 projects (e.g. videoclipes) */
+.grid-work-2 {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  grid-column-gap: 1px !important;
+  grid-row-gap: 1px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  background-color: var(--ff-white-05) !important;
+  align-items: start !important;
+}
+
+/* Grid used on homepage */
+.grid-work-3 {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  grid-column-gap: 1px !important;
+  grid-row-gap: 1px !important;
+  background-color: var(--ff-white-05) !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  width: 100% !important;
+  align-items: start !important;
+  justify-items: stretch !important;
+}
+
+/* Section wrapper for portfolio grids */
+.section-8 {
+  background-color: var(--ff-bg) !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  align-items: stretch !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   6. HERO / PAGE HEADER
+───────────────────────────────────────────────────────────── */
+
+.section-top {
+  background-color: transparent !important;
+  position: relative !important;
+  padding-top: 14rem !important;
+  padding-bottom: 5rem !important;
+}
+
+/* Raise bg-image above body canvas so it shows behind the transparent navbar.
+   z-index:-1 (Webflow default) can sink behind the body background. */
+.section-top .bg-image {
+  z-index: 0 !important;
+}
+
+/* Keep hero content and heading above the bg-image */
+.section-top .content,
+.section-top .heading-project,
+.section-top .info-project {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.section-top.center {
+  min-height: 100svh !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.section-top.full {
+  min-height: 100svh !important;
+  padding-bottom: 4rem !important;
+}
+
+/* Display headings (Octanegx variable) */
+.heading-page,
+.heading-page-2,
+.heading-page-3,
+.heading-page-4 {
+  font-family: var(--ff-display) !important;
+  font-variation-settings: "wdth" 0, "wght" 10 !important;
+  font-weight: 100 !important;
+  text-transform: uppercase !important;
+  color: var(--ff-white) !important;
+  line-height: 0.85 !important;
+  margin: 0 0 0.15em !important;
+  font-size: clamp(4rem, 12vw, 14rem) !important;
+}
+
+/* Smaller page headings (list pages: Cinema / Series) */
+.heading-page-2 {
+  font-size: clamp(3rem, 9vw, 11rem) !important;
+}
+
+.info-project,
+.info-project-2,
+.info-project-3 {
+  font-family: var(--ff-ui) !important;
+  font-size: 0.72rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: var(--ff-white-40) !important;
+  opacity: 1 !important;
+  margin-top: 1.5rem !important;
+  padding-bottom: 0 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   7. HOMEPAGE — OS NOSSOS PROJETOS section
+───────────────────────────────────────────────────────────── */
+
+.section-hero {
+  background-color: var(--ff-bg) !important;
+  min-height: unset !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+  padding: 0 !important;
+}
+
+.block-info {
+  position: static !important;
+  inset: auto !important;
+  align-items: stretch !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+/* The "OS NOSSOS PROJETOS" label above the grid */
+.heading-16 {
+  font-family: var(--ff-ui) !important;
+  font-variation-settings: normal !important;
+  font-size: 0.65rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  color: var(--ff-white-40) !important;
+  text-align: left !important;
+  height: auto !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 3.5rem var(--ff-pad) 2rem !important;
+  display: block !important;
+  border-top: var(--ff-border) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   8. CTA SECTION
+───────────────────────────────────────────────────────────── */
+
+.section-hero .block-cta,
+.contact .block-cta,
+.section-call-to-action .block-cta {
+  padding-top: 6rem !important;
+  padding-bottom: 6rem !important;
+  padding-left: var(--ff-pad) !important;
+  padding-right: var(--ff-pad) !important;
+  border-top: var(--ff-border) !important;
+  text-align: left !important;
+  align-items: flex-start !important;
+}
+
+.text-cta {
+  font-family: var(--ff-ui) !important;
+  font-size: 0.65rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  color: var(--ff-white-40) !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.link-cta {
+  text-decoration: none !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  gap: 0 !important;
+  transition: opacity 0.3s var(--ff-ease) !important;
+}
+
+.link-cta:hover { opacity: 0.7 !important; }
+
+.letter-cta {
+  font-family: var(--ff-display) !important;
+  font-variation-settings: "wdth" 0, "wght" 10 !important;
+  font-size: clamp(4rem, 11vw, 13rem) !important;
+  font-weight: 100 !important;
+  line-height: 0.85 !important;
+  text-transform: uppercase !important;
+  color: var(--ff-white) !important;
+  transition: font-variation-settings 2.5s var(--ff-ease) !important;
+  display: inline-block !important;
+}
+
+.letter-cta:hover {
+  font-variation-settings: "wdth" 100, "wght" 10 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   9. ABOUT PAGE — section content
+───────────────────────────────────────────────────────────── */
+
+.content {
+  max-width: var(--ff-max-w) !important;
+  padding-left: var(--ff-pad) !important;
+  padding-right: var(--ff-pad) !important;
+}
+
+.content.page {
+  grid-row-gap: 6rem !important;
+  padding-top: var(--ff-section-v) !important;
+  padding-bottom: var(--ff-section-v) !important;
+}
+
+/* Section label (e.g. "Intro", "Awards") */
+.text-subtitle {
+  font-family: var(--ff-ui) !important;
+  font-size: 0.65rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  color: var(--ff-white-40) !important;
+  padding-top: 0.3rem !important;
+}
+
+/* Two-column content rows (label | body) */
+.grid-content {
+  grid-template-columns: 12rem 1fr !important;
+  grid-column-gap: 3rem !important;
+  align-items: start !important;
+}
+
+/* Heading inside rich text */
+.heading-15 {
+  font-family: var(--ff-ui) !important;
+  font-size: clamp(1.6rem, 3vw, 2.4rem) !important;
+  font-weight: 600 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: uppercase !important;
+  color: var(--ff-white) !important;
+  margin: 0 0 1.25rem !important;
+}
+
+/* About page body text */
+.paragraph-13,
+.paragraph-14 {
+  font-family: var(--ff-ui) !important;
+  font-size: 1rem !important;
+  font-weight: 300 !important;
+  line-height: 1.85 !important;
+  color: var(--ff-white-70) !important;
+  margin: 0 0 1rem !important;
+}
+
+/* About page images — clean 2-column grid, no overlapping */
+.grid-images {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  grid-template-rows: auto !important;
+  grid-auto-columns: unset !important;
+  grid-auto-rows: unset !important;
+  grid-column-gap: 1px !important;
+  grid-row-gap: 1px !important;
+  width: 100% !important;
+}
+
+/* Reset ALL Webflow per-node overlapping grid-area placements globally */
+.image-grid-2,
+.image-grid-2-copy {
+  grid-area: auto !important;
+  width: 100% !important;
+  aspect-ratio: 16 / 10 !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+}
+
+/* Wide single image used in inner project pages */
+.image-34 {
+  width: 100% !important;
+  aspect-ratio: 16 / 7 !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+}
+
+.image-35 {
+  width: 100% !important;
+  aspect-ratio: 16 / 7 !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  display: block !important;
+}
+
+/* Client logos */
+.grid-clients {
+  grid-template-columns: repeat(3, 1fr) !important;
+  grid-column-gap: 2rem !important;
+  grid-row-gap: 2rem !important;
+  align-items: center !important;
+}
+
+.image-client {
+  width: 100% !important;
+  max-height: 2.5rem !important;
+  object-fit: contain !important;
+  object-position: left center !important;
+  filter: brightness(0) invert(1) !important;
+  opacity: 0.3 !important;
+  transition: opacity 0.3s var(--ff-ease) !important;
+}
+
+.image-client:hover { opacity: 0.7 !important; }
+
+/* Awards */
+.block-award {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 2rem !important;
+  align-items: flex-start !important;
+}
+
+.award {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 0.75rem !important;
+}
+
+.award img {
+  height: 7rem !important;
+  width: auto !important;
+  object-fit: contain !important;
+  filter: brightness(0) invert(1) !important;
+  opacity: 0.7 !important;
+}
+
+.text-year {
+  font-family: var(--ff-ui) !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: var(--ff-white-40) !important;
+  opacity: 1 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   10. CONTACT PAGE — two-column layout
+───────────────────────────────────────────────────────────── */
+
+.section-top.center .content {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  grid-column-gap: 6rem !important;
+  align-items: start !important;
+  max-width: var(--ff-max-w) !important;
+  padding-top: 12rem !important;
+  padding-bottom: 8rem !important;
+  text-align: left !important;
+  width: 100% !important;
+}
+
+.heading-page-4 {
+  font-family: var(--ff-display) !important;
+  font-variation-settings: "wdth" 0, "wght" 10 !important;
+  font-size: clamp(3rem, 8vw, 10rem) !important;
+  font-weight: 100 !important;
+  line-height: 0.85 !important;
+  text-transform: uppercase !important;
+  color: var(--ff-white) !important;
+  margin: 0 0 2rem !important;
+  grid-column: 1 / -1 !important; /* full width heading */
+}
+
+.description {
+  font-family: var(--ff-ui) !important;
+  font-size: 0.88rem !important;
+  font-weight: 300 !important;
+  line-height: 1.9 !important;
+  color: var(--ff-white-60) !important;
+}
+
+.description a, .link-3 {
+  color: var(--ff-white) !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid var(--ff-white-20) !important;
+  transition: border-color 0.25s !important;
+}
+.description a:hover, .link-3:hover {
+  border-color: var(--ff-white) !important;
+}
+
+/* Form styling */
+.form-block-2 { width: 100% !important; }
+
+.block-field {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.text-field-3.w-input,
+.textarea.w-input {
+  background-color: transparent !important;
+  border: none !important;
+  border-bottom: var(--ff-border) !important;
+  border-radius: 0 !important;
+  color: var(--ff-white) !important;
+  font-family: var(--ff-ui) !important;
+  font-size: 0.88rem !important;
+  font-weight: 300 !important;
+  padding: 1.1rem 0 !important;
+  margin-bottom: 0 !important;
+  outline: none !important;
+  transition: border-color 0.25s !important;
+  width: 100% !important;
+  -webkit-appearance: none !important;
+}
+
+.text-field-3.w-input:focus,
+.textarea.w-input:focus {
+  border-bottom-color: var(--ff-white-40) !important;
+}
+
+.text-field-3.w-input::placeholder,
+.textarea.w-input::placeholder {
+  color: var(--ff-white-30) !important;
+  font-style: normal !important;
+}
+
+.textarea.w-input {
+  min-height: 7rem !important;
+  resize: none !important;
+}
+
+.submit-button-2.w-button {
+  background-color: transparent !important;
+  border: 1px solid var(--ff-white-20) !important;
+  border-radius: 0 !important;
+  color: var(--ff-white) !important;
+  font-family: var(--ff-ui) !important;
+  font-size: 0.7rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  padding: 1rem 2.5rem !important;
+  margin-top: 2rem !important;
+  cursor: pointer !important;
+  transition: all 0.25s var(--ff-ease) !important;
+  -webkit-appearance: none !important;
+  display: inline-block !important;
+}
+
+.submit-button-2.w-button:hover {
+  background-color: var(--ff-white) !important;
+  color: var(--ff-bg) !important;
+  border-color: var(--ff-white) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   11. FOOTER — redesigned
+───────────────────────────────────────────────────────────── */
+
+.footer {
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  align-items: center !important;
+  gap: 1.5rem !important;
+  padding: 1.75rem var(--ff-pad) !important;
+  border-top: var(--ff-border) !important;
+  background-color: var(--ff-bg) !important;
+  flex-direction: unset !important;
+  justify-content: unset !important;
+}
+
+/* Footer grouping wrappers */
+.footer-links {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  gap: 0.4rem 2rem !important;
+  align-items: center !important;
+}
+
+.footer-social {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 1.25rem !important;
+  align-items: center !important;
+}
+
+/* Text links in footer */
+.footer .link-footer {
+  font-family: var(--ff-ui) !important;
+  font-size: 0.65rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--ff-white) !important;
+  opacity: 0.38 !important;
+  padding: 0 !important;
+  transition: opacity 0.25s !important;
+}
+
+.footer .link-footer:hover { opacity: 1 !important; }
+
+/* Social icon links */
+.footer-social .w-inline-block {
+  opacity: 0.35 !important;
+  transition: opacity 0.25s !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.footer-social .w-inline-block:hover { opacity: 1 !important; }
+
+.footer-social .w-inline-block img {
+  filter: brightness(0) invert(1) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   12. PROJECT INNER PAGES (cinema/, videoclips/ etc.)
+───────────────────────────────────────────────────────────── */
+
+/* Inner page hero */
+.heading-project,
+.heading-project.ecos,
+.heading-project.shoebox,
+.heading-project.fly,
+.heading-project.stuff {
+  font-family: var(--ff-display) !important;
+  font-variation-settings: "wdth" 0, "wght" 10 !important;
+  font-size: clamp(3rem, 9vw, 11rem) !important;
+  font-weight: 100 !important;
+  line-height: 0.85 !important;
+  text-transform: uppercase !important;
+  color: var(--ff-white) !important;
+  letter-spacing: 0 !important;
+  margin: 0 0 0.2em !important;
+  -webkit-text-stroke-width: 0 !important;
+}
+
+/* Content sections on inner pages */
+.rich-text-block-5 p,
+.rich-text-block-6 p {
+  font-family: var(--ff-ui) !important;
+  font-size: 0.9rem !important;
+  font-weight: 300 !important;
+  line-height: 1.85 !important;
+  color: var(--ff-white-70) !important;
+  margin-bottom: 0.85rem !important;
+}
+
+.heading-17, .heading-18 {
+  font-family: var(--ff-ui) !important;
+  font-size: 0.65rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  color: var(--ff-white-40) !important;
+  margin: 2rem 0 0.75rem !important;
+}
+
+.rich-text-block-5 strong,
+.rich-text-block-6 strong {
+  font-weight: 500 !important;
+  color: var(--ff-white-80) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   13. TEAM CARDS (already defined in findfilms-staging.webflow.css
+   but let's ensure consistency)
+───────────────────────────────────────────────────────────── */
+
+.section-team {
+  padding-top: var(--ff-section-v) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   14. LETTER ANIMATION HERO (Homepage FIND letters)
+───────────────────────────────────────────────────────────── */
+
+/* Each letter block: video/image fills block behind the letter.
+   No overflow:hidden here — letters must animate freely on hover. */
+.block-letter {
+  position: relative !important;
+}
+
+/* Static image fallback (if videos replaced with img) */
+.block-letter .image-36 {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  margin: 0 !important;
+  aspect-ratio: unset !important;
+  z-index: 0 !important;
+}
+
+/* Background video wrapper: fill the block-letter dimensions */
+.block-letter .w-background-video {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Video: override z-index:-100 so it shows above wrapper background */
+.block-letter .w-background-video > video {
+  z-index: 0 !important;
+  object-fit: cover !important;
+}
+
+.block-letter .letter {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.section-top.full .text-info {
+  font-family: var(--ff-ui) !important;
+  font-size: 0.7rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  color: var(--ff-white-40) !important;
+  max-width: none !important;
+  line-height: 1.6 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   15. RESPONSIVE
+───────────────────────────────────────────────────────────── */
+
+/* ── TABLET LARGE (≤1199px) ─────────────────────────────── */
+@media screen and (max-width: 1199px) {
+  :root {
+    --ff-pad: 2rem;
+    --ff-section-v: 6rem;
+  }
+
+  .grid-work-1,
+  .grid-work-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .section-top {
+    padding-top: 10rem !important;
+    padding-bottom: 4rem !important;
+  }
+
+  .section-top.full {
+    padding-top: 6rem !important;
+  }
+
+  .heading-project {
+    font-size: clamp(2.5rem, 6vw, 5rem) !important;
+  }
+}
+
+/* ── TABLET (≤991px) ────────────────────────────────────── */
+@media screen and (max-width: 991px) {
+  :root {
+    --ff-section-v: 5rem;
+  }
+
+  .section-top {
+    padding-top: 8rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  .section-top.full {
+    padding-top: 4rem !important;
+  }
+
+  .grid-content {
+    grid-template-columns: 1fr !important;
+    grid-column-gap: 0 !important;
+    grid-row-gap: 1.5rem !important;
+  }
+
+  .section-top.center .content {
+    grid-template-columns: 1fr !important;
+    padding-top: 9rem !important;
+  }
+
+  .heading-page-4 {
+    grid-column: 1 !important;
+  }
+
+  .grid-clients {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* FIND letter hero: give blocks explicit height */
+  .block-letter {
+    min-height: 30vw !important;
+  }
+}
+
+/* ── MOBILE (≤767px) ────────────────────────────────────── */
+@media screen and (max-width: 767px) {
+  :root {
+    --ff-pad: 1.25rem;
+    --ff-section-v: 4rem;
+    --ff-section-v-sm: 3rem;
+  }
+
+  /* All grids → single column */
+  .grid-work-1,
+  .grid-work-2,
+  .grid-work-3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Hero sections */
+  .section-top {
+    padding-top: 6rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  .section-top.full {
+    padding-top: 3rem !important;
+    min-height: unset !important;
+    padding-bottom: 3rem !important;
+  }
+
+  /* FIND letter blocks: taller so images are visible */
+  .block-letter {
+    min-height: 42vw !important;
+  }
+
+  /* Inner page hero heading */
+  .heading-project {
+    font-size: clamp(2rem, 9vw, 4rem) !important;
+  }
+
+  /* Section headers on list pages */
+  .heading-16 {
+    font-size: clamp(1rem, 5vw, 1.5rem) !important;
+    padding: 2.5rem var(--ff-pad) 1.5rem !important;
+  }
+
+  /* Project cards: ensure enough height on mobile */
+  .link-work-1,
+  .link-work-1-copy-copy {
+    min-height: 60vw !important;
+  }
+
+  .block-award {
+    flex-direction: column !important;
+  }
+
+  .footer {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  .footer-links {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+  }
+
+  .section-hero .block-cta,
+  .contact .block-cta {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+
+  .letter-cta {
+    font-size: clamp(3rem, 14vw, 6rem) !important;
+  }
+
+  .grid-clients {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .section-top.center .content {
+    padding-top: 7rem !important;
+    padding-bottom: 5rem !important;
+  }
+
+  /* Navbar */
+  .navbar,
+  .w-nav {
+    padding: 1rem var(--ff-pad) !important;
+  }
+}
+
+/* ── SMALL MOBILE (≤479px) ──────────────────────────────── */
+@media screen and (max-width: 479px) {
+  .grid-work-1,
+  .grid-work-2,
+  .grid-work-3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .section-top {
+    padding-top: 5rem !important;
+  }
+
+  .block-letter {
+    min-height: 50vw !important;
+  }
+
+  .heading-project {
+    font-size: clamp(1.8rem, 10vw, 3rem) !important;
+  }
+
+  .letter-cta {
+    font-size: clamp(3rem, 16vw, 6rem) !important;
+  }
+
+  .link-work-1,
+  .link-work-1-copy-copy {
+    min-height: 70vw !important;
+  }
+}
